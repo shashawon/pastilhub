@@ -2,7 +2,6 @@
 
 header("Content-Type: application/json");
 
-// include the database connection using an explicit path relative to this file
 require_once __DIR__ . "/../db.php";
 
 // ensure $conn is available

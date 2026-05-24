@@ -44,25 +44,6 @@ async function loadMenuData() {
   }
 }
 
-// async function loadOrders() {
-//   try {
-//     const res = await fetch("http://localhost/pastilhub/backend/api/get_orders.php");
-
-//     if (!res.ok) {
-//       throw new Error("HTTP " + res.status);
-//     }
-
-//     const data = await res.json();
-
-//     console.log("ORDERS FROM BACKEND:", data);
-
-//     orders = data;
-//     render();
-//   } catch (err) {
-//     console.error("LOAD ORDERS FAILED:", err);
-//   }
-// }
-
 function loadOrders() {
   fetch("http://localhost/pastilhub/backend/api/get_orders.php")
     .then((res) => {
@@ -84,46 +65,13 @@ function loadOrders() {
     });
 }
 
-// function render() {
-//   const appDiv = document.getElementById("app");
-
-//   // Show login page if admin page is selected but not logged in
-//   if (currentPage === "admin" && !isAdminLoggedIn) {
-//     appDiv.innerHTML = renderLoginPage();
-
-//     const loginForm = document.getElementById("loginForm");
-
-//     if (loginForm) {
-//       loginForm.addEventListener("submit", (e) => {
-//         e.preventDefault();
-
-//         const username = document.getElementById("username").value;
-//         const password = document.getElementById("password").value;
-
-//         if (
-//           username === ADMIN_USER.username &&
-//           password === ADMIN_USER.password
-//         ) {
-//           isAdminLoggedIn = true;
-//           render();
-//         } else {
-//           document.getElementById("loginError").textContent =
-//             "Invalid credentials!";
-
-//           document.getElementById("loginError").style.display = "block";
-//         }
-//       });
-//     }
-
-//     return;
-//   }
-
 function render() {
   const appDiv = document.getElementById("app");
 
   // =========================
   // ADMIN LOGIN SCREEN
   // =========================
+
   if (currentPage === "admin" && !isAdminLoggedIn) {
     appDiv.innerHTML = renderLoginPage();
 
@@ -161,6 +109,7 @@ function render() {
   // =========================
   // ADMIN PANEL
   // =========================
+
   if (currentPage === "admin" && isAdminLoggedIn) {
     appDiv.innerHTML = `
       <div class="nav-bar">
@@ -192,6 +141,7 @@ function render() {
   // =========================
   // CUSTOMER PAGE
   // =========================
+
   appDiv.innerHTML = `
     <div class="nav-bar">
       <h1>PastilHub</h1>
@@ -210,24 +160,6 @@ function render() {
     render();
   });
 }
-
-// function render() {
-//   console.log("RENDER START");
-
-//   const appDiv = document.getElementById("app");
-
-//   console.log("APP DIV:", appDiv);
-
-//   try {
-//     appDiv.innerHTML = `
-//             <h1>TEST RENDER WORKING</h1>
-//         `;
-
-//     console.log("HTML INSERTED");
-//   } catch (error) {
-//     console.error("RENDER FAILED:", error);
-//   }
-// }
 
 window.switchToCustomer = () => {
   currentPage = "customer";

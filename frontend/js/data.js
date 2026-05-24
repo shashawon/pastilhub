@@ -11,5 +11,3 @@ let menuData = {
   cupSizes: [],
   addOns: [],
 };
-
-// let orders = [];

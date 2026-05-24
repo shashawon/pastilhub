@@ -5,44 +5,44 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
 
-require_once __DIR__ . "/../db.php";
+include __DIR__ . "/../db.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!$data) {
     echo json_encode([
         "success" => false,
-        "error" => "No input data"
+        "error" => "No JSON data received"
     ]);
     exit;
 }
 
-/* SAFE EXTRACTION */
-$orderNumber = $data["orderNumber"] ?? null;
-$customer = $data["customer"] ?? null;
-$mode = $data["mode"] ?? null;
-$topping = $data["topping"] ?? null;
-$rice = $data["rice"] ?? null;
-$cupSize = $data["cup"] ?? null;
+$orderNumber = $data["orderNumber"] ?? "";
+$customer = $data["customer"] ?? "";
+$mode = $data["mode"] ?? "";
+$topping = $data["topping"] ?? "";
+$rice = $data["rice"] ?? "";
+$cupSize = $data["cup"] ?? "";
 $total = $data["total"] ?? 0;
 $status = $data["status"] ?? "pending";
-$timestamp = $data["time"] ?? date("Y-m-d H:i:s");
-
-if (!$customer || !$topping || !$rice) {
-    echo json_encode([
-        "success" => false,
-        "error" => "Missing required fields"
-    ]);
-    exit;
-}
+$timestamp = date("Y-m-d H:i:s");
 
 $sql = "INSERT INTO orders
 (orderNumber, customer, mode, topping, rice, cupSize, total, status, timestamp)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-$stmt = $conn->prepare($sql);
+$stmt = mysqli_prepare($conn, $sql);
 
-$stmt->bind_param(
+if (!$stmt) {
+    echo json_encode([
+        "success" => false,
+        "error" => mysqli_error($conn)
+    ]);
+    exit;
+}
+
+mysqli_stmt_bind_param(
+    $stmt,
     "ssssssdss",
     $orderNumber,
     $customer,
@@ -55,7 +55,7 @@ $stmt->bind_param(
     $timestamp
 );
 
-$success = $stmt->execute();
+$success = mysqli_stmt_execute($stmt);
 
 if ($success) {
 
@@ -70,11 +70,10 @@ if ($success) {
 
     echo json_encode([
         "success" => false,
-        "error" => $stmt->error
+        "error" => mysqli_stmt_error($stmt)
     ]);
 }
 
-$stmt->close();
-$conn->close();
-
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
 ?>

@@ -2,7 +2,7 @@
 
 header("Content-Type: application/json");
 
-include __DIR__ . "/db.php";
+include __DIR__ . "/../db.php";
 if (!isset($conn) && isset($connection)) {
     $conn = $connection;
 }

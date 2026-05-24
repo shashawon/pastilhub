@@ -6,17 +6,6 @@ let calendarViewMode = 'day';
 let currentCalendarDate = new Date();
 let selectedCalendarDate = new Date().toISOString().split('T')[0];
 
-// function getOrdersByDate(dateStr) {
-//   return (orders || []).filter(order => {
-//     if (!order || !order.timestamp) return false;
-
-//     const d = new Date(order.timestamp);
-//     if (isNaN(d.getTime())) return false;
-
-//     return d.toISOString().split("T")[0] === dateStr;
-//   });
-// }
-
 function getOrdersByDate(dateStr) {
   return (orders || []).filter(order => {
     if (!order.timestamp) return false;

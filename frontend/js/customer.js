@@ -41,33 +41,6 @@ function getSelectedAddOns() {
 // TOTAL
 // =========================
 
-// function calculateTotal() {
-//   let total = 0;
-
-//   const topping = getSelectedTopping();
-//   const rice = getSelectedRice();
-//   const cup = getSelectedCupSize();
-//   const addOns = getSelectedAddOns();
-
-//   if (topping) {
-//     total += parseFloat(topping.price || 0);
-//   }
-
-//   if (rice) {
-//     total += parseFloat(rice.price || 0);
-//   }
-
-//   if (cup) {
-//     total += parseFloat(cup.price || 0);
-//   }
-
-//   addOns.forEach((addon) => {
-//     total += parseFloat(addon.price || 0);
-//   });
-
-//   return total;
-// }
-
 function calculateTotal() {
   let total = 0;
 
@@ -340,46 +313,6 @@ function renderMenuTable() {
 // ADDONS
 // =========================
 
-// function renderAddOnsSection() {
-//   return `
-//     <div class="addons-section">
-
-//       <h3>Add-ons</h3>
-
-//       <div class="addons-grid">
-
-//         ${menuData.addOns
-//           .map(
-//             (addon) => `
-//             <div
-//               class="addon-item ${
-//                 selectedAddOnIds.includes(Number(addon.id)) ? "selected" : ""
-//               }"
-
-//               onclick="toggleAddOn(${Number(addon.id)})"
-//             >
-
-//               <div>${addon.name}</div>
-
-//               <div>₱${addon.price}</div>
-
-//               <input
-//                 type="checkbox"
-//                 class="addon-checkbox"
-//                 ${selectedAddOnIds.includes(Number(addon.id)) ? "checked" : ""}
-//               >
-
-//             </div>
-//           `,
-//           )
-//           .join("")}
-
-//       </div>
-
-//     </div>
-//   `;
-// }
-
 function renderAddOnsSection() {
   return `
     <div class="addons-section">
@@ -556,6 +489,7 @@ function placeOrder() {
   const order = {
     orderNumber: "ORD-" + Math.floor(Math.random() * 10000),
     customer: customerName,
+    mode: orderMode,
     topping: topping.name,
     rice: rice.name,
     cup: cup.name,
@@ -574,6 +508,7 @@ function placeOrder() {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log("CREATE ORDER RESPONSE:", data);
       if (!data.success) {
         alert("Order failed to save!");
         return;

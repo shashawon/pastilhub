@@ -2,7 +2,6 @@
 
 header("Content-Type: application/json");
 
-// Attempt to include the database connection. Try local then parent directory.
 require_once __DIR__ . "/../db.php";
 if (!isset($conn)) {
     if (file_exists(__DIR__ . '/../db.php')) {

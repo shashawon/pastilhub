@@ -2,7 +2,6 @@
 
 header("Content-Type: application/json");
 
-// try including db.php from current or parent directory
 if (file_exists(__DIR__ . '/db.php')) {
     include __DIR__ . '/db.php';
 } elseif (file_exists(__DIR__ . '/../db.php')) {
